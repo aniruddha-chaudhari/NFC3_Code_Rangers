@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PhotoIcon, DocumentIcon } from '@heroicons/react/24/solid';
 
 const petBreeds = [
@@ -12,24 +12,70 @@ const petBreeds = [
 ];
 
 export default function PetProfileForm() {
+  const [formData, setFormData] = useState({
+    petName: '',
+    breed: '',
+    age: '',
+    petGender: '',
+    adoptionStatus: '',
+    description: '',
+    shelterName: '',
+    shelterContact: '',
+    shelterEmail: '',
+    shelterAddress: '',
+    vaccination: '',
+    certificates: {
+      registration: null,
+      pollution: null,
+      health: null,
+      microchip: null
+    }
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    if (type === 'file') {
+      setFormData(prevData => ({
+        ...prevData,
+        certificates: {
+          ...prevData.certificates,
+          [name]: files[0]
+        }
+      }));
+    } else {
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Process formData as needed
+    console.log(formData);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="px-4 py-5 sm:p-6">
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Pet Profile for Adoption</h2>
-          <form className="space-y-8">
+          <form className="space-y-8" onSubmit={handleSubmit}>
             {/* Pet Basic Information */}
             <div className="space-y-6">
               <h3 className="text-lg font-medium text-gray-900">Pet Basic Information</h3>
               <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                 <div className="sm:col-span-3">
-                  <label htmlFor="pet-name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="petName" className="block text-sm font-medium text-gray-700">
                     Pet Name
                   </label>
                   <input
                     type="text"
-                    name="pet-name"
-                    id="pet-name"
+                    name="petName"
+                    id="petName"
+                    value={formData.petName}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -41,6 +87,8 @@ export default function PetProfileForm() {
                   <select
                     id="breed"
                     name="breed"
+                    value={formData.breed}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   >
                     <option value="">Select a breed</option>
@@ -60,21 +108,30 @@ export default function PetProfileForm() {
                     type="number"
                     name="age"
                     id="age"
+                    value={formData.age}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
+
                 <div className="sm:col-span-3">
-                  <label htmlFor="pet-gender" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="petGender" className="block text-sm font-medium text-gray-700">
                     Pet Gender
                   </label>
-                  <input
-                    type="text"
-                    name="pet-gender"
-                    id="pet-gender"
+                  <select
+                    id="petGender"
+                    name="petGender"
+                    value={formData.petGender}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                 </div>
-                {/* New Adoption Status Checkboxes */}
+
+                {/* Adoption Status Radio Buttons */}
                 <div className="sm:col-span-6">
                   <fieldset>
                     <legend className="text-sm font-medium text-gray-700">Adoption Status</legend>
@@ -82,8 +139,11 @@ export default function PetProfileForm() {
                       <div className="flex items-center">
                         <input
                           id="adopted"
-                          name="adoption-status"
+                          name="adoptionStatus"
                           type="radio"
+                          value="Adopted"
+                          checked={formData.adoptionStatus === 'Adopted'}
+                          onChange={handleChange}
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         />
                         <label htmlFor="adopted" className="ml-3 block text-sm font-medium text-gray-700">
@@ -93,8 +153,11 @@ export default function PetProfileForm() {
                       <div className="flex items-center">
                         <input
                           id="not-adopted"
-                          name="adoption-status"
+                          name="adoptionStatus"
                           type="radio"
+                          value="Not Adopted"
+                          checked={formData.adoptionStatus === 'Not Adopted'}
+                          onChange={handleChange}
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         />
                         <label htmlFor="not-adopted" className="ml-3 block text-sm font-medium text-gray-700">
@@ -138,6 +201,8 @@ export default function PetProfileForm() {
                   id="description"
                   name="description"
                   rows={3}
+                  value={formData.description}
+                  onChange={handleChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900 bg-white"
                   placeholder="Tell us about your pet..."
                 />
@@ -146,49 +211,57 @@ export default function PetProfileForm() {
 
             {/* Shelter Details */}
             <div className="space-y-6">
-              <h3 className="text-lg font-medium text-gray-900">Shelter Information</h3>
+              <h3 className="text-lg font-medium text-gray-900">Shelter Details</h3>
               <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                 <div className="sm:col-span-3">
-                  <label htmlFor="shelter-name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="shelterName" className="block text-sm font-medium text-gray-700">
                     Shelter Name
                   </label>
                   <input
                     type="text"
-                    name="shelter-name"
-                    id="shelter-name"
+                    name="shelterName"
+                    id="shelterName"
+                    value={formData.shelterName}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="sm:col-span-3">
-                  <label htmlFor="shelter-contact" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="shelterContact" className="block text-sm font-medium text-gray-700">
                     Shelter Contact
                   </label>
                   <input
-                    type="tel"
-                    name="shelter-contact"
-                    id="shelter-contact"
+                    type="number"
+                    name="shelterContact"
+                    id="shelterContact"
+                    value={formData.shelterContact}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="sm:col-span-3">
-                  <label htmlFor="shelter-email" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="shelterEmail" className="block text-sm font-medium text-gray-700">
                     Shelter Email
                   </label>
                   <input
                     type="email"
-                    name="shelter-email"
-                    id="shelter-email"
+                    name="shelterEmail"
+                    id="shelterEmail"
+                    value={formData.shelterEmail}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div className="sm:col-span-3">
-                  <label htmlFor="shelter-address" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="shelterAddress" className="block text-sm font-medium text-gray-700">
                     Shelter Address
                   </label>
                   <input
                     type="text"
-                    name="shelter-address"
-                    id="shelter-address"
+                    name="shelterAddress"
+                    id="shelterAddress"
+                    value={formData.shelterAddress}
+                    onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-900 bg-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -216,6 +289,7 @@ export default function PetProfileForm() {
                         type="file"
                         className="sr-only"
                         accept=".pdf"
+                        onChange={handleChange}
                       />
                       <label
                         htmlFor={cert.id}
@@ -240,6 +314,8 @@ export default function PetProfileForm() {
                   id="vaccination"
                   name="vaccination"
                   rows={4}
+                  value={formData.vaccination}
+                  onChange={handleChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900 bg-white"
                   placeholder="Enter vaccination details here..."
                 />
