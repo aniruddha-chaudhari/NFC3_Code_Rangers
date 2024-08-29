@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-import { BarChart2, DollarSign, Menu, Settings, ShoppingBag, ShoppingCart, TrendingUp, Users } from "lucide-react";
+import { BarChart2, Dog, Menu, Settings, ShoppingBag, ShoppingCart, TrendingUp, Users } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from '../assets/a-logo-for-jeevsaathi-a-pet-adoption-platform-feat-uXS8IZJfQmqMxBne9hngsQ-VNUE8niBR0ac-oAjII5aUA__1_-removebg-preview.png'
 import text from '../assets/a-logo-for-jeevsaathi-a-pet-adoption-platform-feat-uXS8IZJfQmqMxBne9hngsQ-VNUE8niBR0ac-oAjII5aUA-removebg-preview.png'
@@ -8,12 +8,8 @@ const SidebarContext = createContext();
 
 const SIDEBAR_ITEMS = [
     { name: "Overview", icon: BarChart2, color: "#FF0000", href: "/" },
-    { name: "Products", icon: ShoppingBag, color: "#FF0000", href: "/products" },
-    { name: "Pets", icon: Users, color: "#FF0000", href: "/pets" },
-    { name: "Sales", icon: DollarSign, color: "#FF0000", href: "/sales" },
-    { name: "Orders", icon: ShoppingCart, color: "#FF0000", href: "/orders" },
-    { name: "Analytics", icon: TrendingUp, color: "#FF0000", href: "/analytics" },
-    { name: "Settings", icon: Settings, color: "#FF0000", href: "/settings" },
+    { name: "Pets", icon: Dog, color: "#FF0000", href: "/pets" },
+    
 ];
 
 const Sidebar = () => {
