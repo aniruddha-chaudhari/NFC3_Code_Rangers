@@ -3,13 +3,14 @@ import { BarChart2, Dog, Menu, Settings, ShoppingBag, ShoppingCart, TrendingUp, 
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from '../assets/a-logo-for-jeevsaathi-a-pet-adoption-platform-feat-uXS8IZJfQmqMxBne9hngsQ-VNUE8niBR0ac-oAjII5aUA__1_-removebg-preview.png'
 import text from '../assets/a-logo-for-jeevsaathi-a-pet-adoption-platform-feat-uXS8IZJfQmqMxBne9hngsQ-VNUE8niBR0ac-oAjII5aUA-removebg-preview.png'
+import PetProfileForm from "./pets/form";
 
 const SidebarContext = createContext();
 
 const SIDEBAR_ITEMS = [
     { name: "Overview", icon: BarChart2, color: "#FF0000", href: "/" },
     { name: "Pets", icon: Dog, color: "#FF0000", href: "/pets" },
-    
+    { name: "Form", icon: Dog, color: "#FF0000", href: "/form" },
 ];
 
 const Sidebar = () => {

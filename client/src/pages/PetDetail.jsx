@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Pet from '../Components/pets/petdetail'; // Adjust the path as necessary
 import Header from '../Components/common/Header';
-import { usePetStore } from '../../store/addpet'; // Import your store or data-fetching logic
+import { usePetStore } from '../store/addpet'; // Import your store or data-fetching logic
 
 function PetDetail() {
   const { _id } = useParams();

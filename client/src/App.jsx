@@ -9,6 +9,7 @@ import OverviewPage from './pages/Overview';
 import Pets from './pages/Pets';
 import Petcard from './pages/Pets'; // Import Petcard component
 import PetDetail from './pages/PetDetail'; // Import PetDetail component
+import PetProfilePage from './pages/Form';
 
 const App = () => {
   const { user, ischeckingAuth, authCheck } = useAuthstore();
@@ -36,8 +37,7 @@ const App = () => {
         <Route path='/pets' element={user ? <Pets /> : <Navigate to={"/login"} />} />
         <Route path='/petcard' element={<Petcard />} /> {/* Update path if needed */}
         <Route path="/pets/:id" element={<PetDetail />} /> {/* Add route for PetDetail */}
-     
-
+        <Route path="/form" element={<PetProfilePage />} />
       </Routes>
     </div>
   );
