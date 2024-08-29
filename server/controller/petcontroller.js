@@ -1,29 +1,44 @@
 import Pet from '../models/petmodel.js';
+import axios from 'axios';
+
 export async function createPet(req, res) {
     try {
-        const { name, species, breed, age, gender, description, shelter, image } = req.body;
+        const { name, breed, age, gender, description, shelter, image } = req.body;
+        
+        // Log the entire request body to ensure it is being received correctly
+        console.log('Request body:', req.body);
+        
+        // Log individual fields to verify they are being extracted correctly
+        console.log('Extracted fields:', name, breed, age, gender, description, shelter, image);
 
-        // Set default image URL if not provided
-        const petImage = image || 'https://avatar.iran.liara.run/public';
+        async function fetchImageUrl() {
+            try {
+                const response = await axios.get('https://dog.ceo/api/breeds/image/random'); // Replace with the actual API URL
+                return response.data.message; // Adjust based on the actual response structure
+            } catch (error) {
+                console.error('Error fetching image URL:', error);
+                return 'https://avatar.iran.liara.run/public'; // Fallback URL
+            }
+        }
+
+        // Fetch image URL if not provided
+        const petImage = image || await fetchImageUrl();
 
         const newPet = new Pet({
             name,
-            species,
             breed,
             age,
             gender,
             description,
-            shelter,
+            shelter, // Ensure this is either a valid ObjectId or a string based on your schema
             image: petImage
         });
 
-        const savedPet = await newPet.save();
-
-        res.status(201).json(savedPet);
-        console.log('Pet created successfully');
+        await newPet.save();
+        res.status(201).json(newPet);
     } catch (error) {
-        // Send error response
-        res.status(500).json({ message: 'Error creating pet', error });
+        console.error('Error creating pet:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 }
 
@@ -63,7 +78,7 @@ export async function getPetById(req, res) {
         if (!pet) {
             return res.status(404).json({ message: 'Pet not found' });
         }
-console.log('Pet found successfully');
+        console.log('Pet found successfully');
         res.status(200).json(pet);
     } catch (error) {
         console.error(error);
@@ -72,16 +87,3 @@ console.log('Pet found successfully');
     }
 }
 
-export async function addMultiplePets(req, res) {
-    try {
-        const pets = req.body; // Assuming the array of pet objects is sent in the request body
-
-        // Assuming Pet is a model from a database ORM like Mongoose
-        const insertedPets = await Pet.insertMany(pets);
-
-        res.status(201).json(insertedPets);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-}

@@ -10,7 +10,7 @@ export const usePetStore = create((set) => ({
     createPet: async (petData) => {
         set({ isLoading: true });
         try {
-            const response = await axios.post('/api/v1/pet/create', petData);
+            const response = await axios.post('http://localhost:5000/api/v1/pet/create', petData);
             set((state) => ({ pets: [...state.pets, response.data], isLoading: false }));
             toast.success('Pet created successfully');
         } catch (error) {

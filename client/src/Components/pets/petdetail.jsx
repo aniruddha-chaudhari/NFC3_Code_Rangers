@@ -43,10 +43,10 @@ export default function Pet({ pet }) {
           <div className="lg:w-1/2 grid grid-cols-1 gap-6">
             {petImage && (
               <img
-              src={petImage}
-              className="w-64 h-64 object-cover object-center rounded-lg"
-              alt={pet.name}
-            />
+                src={petImage}
+                className="w-64 h-64 object-cover object-center rounded-lg"
+                alt={pet.name}
+              />
             )}
           </div>
 
@@ -58,11 +58,23 @@ export default function Pet({ pet }) {
               <HeartIcon className="h-6 w-6 text-red-500" />
               <SparklesIcon className="h-6 w-6 text-yellow-500" />
             </div>
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded-lg"
+            >
+              Adopt
+            </button>
+            <button 
+               
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            >
+              Donate
+            </button>
             <div className="text-sm text-gray-500">
               <p>Age: {pet.age}</p>
               <p>Breed: {pet.breed}</p>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

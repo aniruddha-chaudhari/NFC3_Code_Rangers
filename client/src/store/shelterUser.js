@@ -14,7 +14,7 @@ export const useShelterUserStore = create((set) => ({
     login: async (credentials) => {
         set({ isLoggingIn: true });
         try {
-            const response = await axios.post('/api/v1/shelter/login', credentials);
+            const response = await axios.post('http://localhost:5000/api/v1/shelter/login', credentials);
             set({ shelter: response.data.shelter,User:response.data.shelter,isLoggingIn: false });
             toast.success('Logged in successfully');
         } catch (error) {

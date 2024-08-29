@@ -37,6 +37,7 @@ const App = () => {
         <Route path='/pets' element={user ? <Pets /> : <Navigate to={"/login"} />} />
         <Route path='/petcard' element={<Petcard />} /> {/* Update path if needed */}
         <Route path="/pets/:_id" element={<PetDetail />} /> {/* Add route for PetDetail */}
+        <Route path="/form" element={<PetProfilePage />} />
      
 
       </Routes>

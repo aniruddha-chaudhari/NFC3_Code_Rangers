@@ -6,7 +6,7 @@ const petSchema = new Schema({
     type: String,
     required: true,
   },
-  adopted:{
+  adopted: {
     type: Boolean,
     default: false
   },
@@ -22,29 +22,22 @@ const petSchema = new Schema({
   },
   gender: {
     type: String,
-    required: true,
-    enum: ['Male', 'Female']
+    required: true
   },
   description: {
     type: String,
-    required: false,
+    required: true
   },
   shelter: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'Shelter',
     required: true
   },
   image: {
     type: String,
-    required: false // Path or URL to pet's image
-  },
-  dateAdded: {
-    type: Date,
-    default: Date.now
+    required: true
   }
 });
 
-// Create and export the model
 const Pet = mongoose.model('Pet', petSchema);
-
 export default Pet;
