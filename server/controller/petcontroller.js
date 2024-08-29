@@ -52,3 +52,36 @@ export async function deletePet(req, res) {
         res.status(500).json({ message: 'Error deleting pet', error });
     }
 }
+
+export async function getPetById(req, res) {
+    try {
+        const { id } = req.params;
+
+        // Assuming Pet is a model from a database ORM like Mongoose
+        const pet = await Pet.findById(id);
+
+        if (!pet) {
+            return res.status(404).json({ message: 'Pet not found' });
+        }
+console.log('Pet found successfully');
+        res.status(200).json(pet);
+    } catch (error) {
+        console.error(error);
+        console.log('Error fetching pet');
+        res.status(500).json({ message: 'Server error' });
+    }
+}
+
+export async function addMultiplePets(req, res) {
+    try {
+        const pets = req.body; // Assuming the array of pet objects is sent in the request body
+
+        // Assuming Pet is a model from a database ORM like Mongoose
+        const insertedPets = await Pet.insertMany(pets);
+
+        res.status(201).json(insertedPets);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}

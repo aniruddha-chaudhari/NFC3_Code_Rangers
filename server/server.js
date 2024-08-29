@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-
+import cors from 'cors';
 import petRoutes from './routes/petRoutes.js';
 import authRoutes from './routes/authroute.js';
 import { ENV_VARS } from './config/envVars.js';
@@ -12,7 +12,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = ENV_VARS.PORT;
 
-
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());   

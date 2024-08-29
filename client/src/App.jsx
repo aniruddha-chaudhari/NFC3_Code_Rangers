@@ -35,7 +35,7 @@ const App = () => {
         <Route path="/signup" element={!user ? <Signuppage /> : <Navigate to={'/'} />} />
         <Route path='/pets' element={user ? <Pets /> : <Navigate to={"/login"} />} />
         <Route path='/petcard' element={<Petcard />} /> {/* Update path if needed */}
-        <Route path="/pets/:id" element={<PetDetail />} /> {/* Add route for PetDetail */}
+        <Route path="/pets/:_id" element={<PetDetail />} /> {/* Add route for PetDetail */}
      
 
       </Routes>
