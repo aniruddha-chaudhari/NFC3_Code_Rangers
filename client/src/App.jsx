@@ -9,6 +9,7 @@ import OverviewPage from './pages/Overview';
 import Pets from './pages/Pets';
 import Petcard from './pages/Pets'; // Import Petcard component
 import PetDetail from './pages/PetDetail'; // Import PetDetail component
+import PetProfilePage from './pages/Form';
 
 const App = () => {
   const { user, ischeckingAuth, authCheck } = useAuthstore();
