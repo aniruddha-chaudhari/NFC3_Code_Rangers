@@ -10,6 +10,7 @@ const Signuppage = () => {
   const [email, setEmail] = useState(emailvalue || '')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  
 
   const {signup} = useAuthstore();
 

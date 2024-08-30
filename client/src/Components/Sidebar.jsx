@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-import { BarChart2, Dog, Menu, Settings, ShoppingBag, ShoppingCart, TrendingUp, Users } from "lucide-react";
+import { BarChart2, Dog, Menu, Settings, MessageCircle, CalendarHeart, TrendingUp, Users } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from '../assets/a-logo-for-jeevsaathi-a-pet-adoption-platform-feat-uXS8IZJfQmqMxBne9hngsQ-VNUE8niBR0ac-oAjII5aUA__1_-removebg-preview.png'
 import text from '../assets/a-logo-for-jeevsaathi-a-pet-adoption-platform-feat-uXS8IZJfQmqMxBne9hngsQ-VNUE8niBR0ac-oAjII5aUA-removebg-preview.png'
@@ -11,6 +11,9 @@ const SIDEBAR_ITEMS = [
     { name: "Overview", icon: BarChart2, color: "#FF0000", href: "/" },
     { name: "Pets", icon: Dog, color: "#FF0000", href: "/pets" },
     { name: "Form", icon: Dog, color: "#FF0000", href: "/form" },
+    {name:"chat",icon:MessageCircle,color:"#FF0000",href:"/chat"},
+    { name: "Community & Events", icon: CalendarHeart, color: "#FF0000", href: "/commevent" }
+    
 ];
 
 const Sidebar = () => {

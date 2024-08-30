@@ -10,6 +10,13 @@ import Pets from './pages/Pets';
 import Petcard from './pages/Pets'; // Import Petcard component
 import PetDetail from './pages/PetDetail'; // Import PetDetail component
 import PetProfilePage from './pages/Form';
+import ContactForm from './pages/email';
+import ChatComponent from './pages/chat';
+import HomePage from './pages/Community';
+import PetCommunityPage from './pages/Community';
+import PetAdoptionEventsPage from './pages/PetAdoptionEventsPage';
+import PetProfileForm from './pages/participate';
+import DonateUs from './pages/donation';
 
 const App = () => {
   const { user, ischeckingAuth, authCheck } = useAuthstore();
@@ -37,7 +44,13 @@ const App = () => {
         <Route path='/pets' element={user ? <Pets /> : <Navigate to={"/login"} />} />
         <Route path='/petcard' element={<Petcard />} /> {/* Update path if needed */}
         <Route path="/pets/:_id" element={<PetDetail />} /> {/* Add route for PetDetail */}
-        <Route path="/form" element={<PetProfilePage />} />
+        <Route path="/form" element={<PetProfilePage/>} />
+        <Route path="/chat" element={<ChatComponent/>} />
+        <Route path="/commevent" element={<HomePage />} />
+        <Route path="/petcommunity" element={<PetCommunityPage />} />
+        <Route path="/events" element={<PetAdoptionEventsPage/>} />
+        <Route path="/participate" element={<PetProfileForm/>} />
+        <Route path="*" element={<DonateUs/>} />
      
 
       </Routes>
