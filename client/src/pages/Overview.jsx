@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../Components/common/Header';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import BasicTable from '../Components/common/Table';
+import TableNavigation from '../Components/common/Table';
 
 const petColumns = [
   {
@@ -226,7 +227,7 @@ const ImageCarousel = () => {
     const fetchImages = async () => {
       try {
         const promises = [];
-        const numOfImages = 5; // Number of images you want to fetch
+        const numOfImages = 5;
         for (let i = 0; i < numOfImages; i++) {
           promises.push(axios.get('https://dog.ceo/api/breeds/image/random'));
         }
@@ -254,36 +255,72 @@ const ImageCarousel = () => {
   }
 
   return (
-    <div className="relative w-full h-[600px]"> {/* Adjust height for larger display */}
-      {/* Change to object-contain */}
+    <div className="relative w-full h-[600px] overflow-hidden rounded-lg shadow-lg">
       <img
         src={images[currentIndex] || "/api/placeholder/800/600"}
         alt={`Image ${currentIndex + 1}`}
-        className="w-full h-full object-contain"
+        className="w-full h-full object-cover transition-opacity duration-500 ease-in-out"
       />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
       <button
         onClick={prevImage}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-20 text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-white"
       >
         <ChevronLeft size={24} />
       </button>
       <button
         onClick={nextImage}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-20 text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-white"
       >
         <ChevronRight size={24} />
       </button>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {images.map((_, index) => (
+          <div
+            key={index}
+            className={`w-2 h-2 rounded-full ${
+              index === currentIndex ? 'bg-white' : 'bg-white bg-opacity-50'
+            }`}
+          ></div>
+        ))}
+      </div>
     </div>
   );
 };
 
-const OverviewPage = () => {
+
+
+const OverviewPage = () => { 
+  return ( 
+  <div className='flex-1 overflow-auto relative z-10'> 
+  <Header title={'Overview'}></Header> 
+  <main className='max-w-7xl mx-auto py-6 px-4 lg:px-8'> 
+    <ImageCarousel /> 
+  <BasicTable columns={petColumns} data={petData} /> 
+  </main> 
+  </div> ); }; 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  
+
+  const paginatedData = petData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className='flex-1 overflow-auto relative z-10'>
       <Header title={'Overview'}></Header>
       <main className='max-w-7xl mx-auto py-6 px-4 lg:px-8'>
         <ImageCarousel />
-        <BasicTable columns={petColumns} data={petData} />
+        <div className="mt-8">
+          <BasicTable columns={petColumns} data={paginatedData} />
+          <TableNavigation
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </main>
     </div>
   );
